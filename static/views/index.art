@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap 101 Template</title>
+
+  <!-- Bootstrap -->
+  <link href="../lib/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
+      <style>
+
+        .navbar-text .navbar-link{
+          color: red;
+          font-size: 18px;
+          font-weight: 700;
+        }
+
+        .mr {
+          margin: 0px 10px;
+        }
+        tbody {
+          text-align: center;
+        }
+        table thead th{
+          text-align: center;
+        }
+
+      .hidden {
+        display: none;
+      }
+      </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+                aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">欢迎来到后台管理系统</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <p class="navbar-text navbar-right">欢迎{{userName}}登录
+                <a href="/logout" class="navbar-link"> 退出</a>
+              </p>
+            </div>
+            <!-- /.navbar-collapse -->
+          </div>
+          <!-- /.container-fluid -->
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="list-group">
+          <a href="#" class="list-group-item active">
+            学生管理
+          </a>
+          <a href="#" class="list-group-item">系统管理</a>
+          <a href="#" class="list-group-item">用户管理</a>
+          <a href="#" class="list-group-item">密码修改</a>
+          <a href="#" class="list-group-item">退出系统</a>
+        </div>
+      </div>
+      <!-- 列表区域 list-box -->
+      <div class="col-md-9 list-box">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+              <ol class="breadcrumb">
+                  <li><a href="#">首页</a></li>
+                  <li><a href="#">学生管理</a></li>
+                  <li class="active">学生列表</li>
+              </ol>
+          </div>
+          <div class="panel-heading">
+              <form class="form-inline">
+                  <div class="form-group">
+                    <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
+                    <div class="input-group">
+                      <div class="input-group-addon">学生姓名</div>
+                      <input type="text" class="form-control" id="exampleInputAmount" placeholder="请输入学生姓名进行查询">
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-success mr btn-search">查找</button>
+                  <button type="submit" class="btn btn-success box-show-add ">新增</button>
+                </form>
+          </div>
+          <div class="panel-body">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>姓名</th>
+                    <th>年龄</th>
+                    <th>性别</th>
+                    <th>手机号码</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 
+                </tbody>
+              </table>
+          </div>
+        </div>
+      </div>
+      <!-- 新增区域 add-box -->
+      <div class="col-md-9 add-box hidden">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">首页</a>
+                    </li>
+                    <li>
+                        <a href="#">学生管理</a>
+                    </li>
+                    <li class="active">学生列表</li>
+                </ol>
+            </div>
+            <div class="panel-body">
+                <form action="" method='get'  class="form-horizontal">
+                    <div class="form-group">
+                        <label for="vtitle" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="name" value="请善待程序员" id="name" placeholder="请输入姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vsortno" class="col-sm-2 control-label">年龄</label>
+                        <div class="col-sm-10">
+                            <input type="Number" class="form-control" name="age" value="18" id="age" placeholder="请输入年龄">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vvideoid" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="sex" value="男" id="sex" placeholder="请输入性别">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vsummary" class="col-sm-2 control-label">电话</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="phone" value="18888888888" id="phone" placeholder="请输入电话">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vimg" class="col-sm-2 control-label">地址</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="address" value="中粮商务公园庭威" id="address" placeholder="请输入地址">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="vremark" class="col-sm-2 control-label">简介</label>
+                        <div class="col-sm-10">
+                            <textarea style="width: 550px;height: 220px" name="introduction" placeholder="请输入简介">10块钱盒饭 都吃不起</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn-control btn btn-default">修改</button>
+                            <a href="javascript:void(0)" class="btn btn-warning">取消</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="../lib/js/jquery-1.12.4.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../lib/js/bootstrap.min.js"></script>
+<script>
+  $(function () {
+    //点击新增出现 显示新增页面 展示页面隐藏
+    $('.box-show-add').click(function (event) {
+      event.preventDefault();
+      console.log(11)
+      $('.list-box').addClass('hidden');
+  
+      $('.add-box').removeClass('hidden').find('.btn-control').addClass('btn-danger').text('新增');
+    })
+    //点击取消复原
+    $('.btn-warning').click(function (event) {
+      event.preventDefault();
+      $('.list-box').removeClass('hidden');
+      $('.add-box').addClass('hidden');
+    })
+
+    //点击新增按钮提交数据
+    $('.btn-control').click(function (event) {
+      if($(this).text() == '新增') {
+        $.ajax({
+        url:'/index/insert',
+        data:$('.add-box form').serialize(),
+        type:'get',
+        success: function (backData) {
+          console.log(backData);
+          
+          //恢复列表区域
+          $('.list-box').click()
+        }
+      })
+      }else {
+        // event.preventDefault();
+        let sendDate = $(".add-box form").serialize();
+        //拼接id
+        sendDate +=`&id=${$(this).attr('data-id')}`;
+        // console.log(sendDate)
+        $.ajax({
+          url:'/index/update',
+          data:sendDate,
+          type:'get',
+          success: function (backData) {
+            // console.log(backData.list[0].name);
+            getData();
+
+            $('a.btn-warning').click();
+          }
+        })
+
+      }
+    })
+
+    getData();
+    
+    //点击删除
+    $('.list-box tbody').on('click','a.btn-danger',function () {
+
+      if(window.confirm('确定要删除吗')){
+        //接收id
+        let id = $(this).parent().parent().attr('data-id');
+        // console.log(id);
+  
+        //发起请求
+        $.ajax({
+          url:'/index/delete',
+          data:{
+            id:id
+          },
+          success: function (backData) {
+            console.log(backData)
+            getData()
+          }
+        })
+
+      }else {
+        alert('感谢不杀之恩')
+      }
+    })
+
+
+    //查询
+    $('.btn-search').click(function () {
+      // console.log(11)
+      //拿到输入的值
+      let userName = $('#exampleInputAmount').val();
+      // console.log(userName);
+
+      $.ajax({
+        url:'index/search',
+        data: {
+          userName
+        },
+        success:function (backData){
+          // console.log(backData);
+          //只渲染查到的数据
+          renderData(backData)
+        }
+      })
+    })
+
+
+    //点击编辑
+    $('.list-box tbody').on("click",'a.btn-success',function () {
+      // console.log(1)
+      //拿到id 去传入返回数据
+      let id = $(this).parent().parent().attr('data-id');
+      // console.log(id);
+      $.ajax({
+        url:'/index/search',
+        data:{
+          id
+        },
+        success: function (backData) {
+          console.log(backData);
+          $('.list-box').addClass('hidden');
+          $('.add-box').removeClass('hidden');
+          //把返回的数据 遍历
+          let data = backData.list[0];
+          // console.log(data);
+          //因为返回数据的键跟表单的键一样 所以遍历返回的对象把数据加到每一条input里面
+          for(const key in data) {
+            $(`.add-box input[name=${key}]`).val(data[key]);  
+          }
+          //把id存起来
+          $('.add-box form button[type=button]').attr('data-id',data._id);
+        }
+      })
+    })
+
+    //渲染数据
+    function getData() {
+      $.ajax({
+        url:'/index/list',
+        success:function (backData) {
+          console.log(backData)
+          //使用es6 拼接渲染数据
+
+          let result = '';
+
+          for(var i = 0; i <backData.list.length; i++) {
+            result +=
+             `
+                <tr data-id='${backData.list[i]._id}'>
+                  <td>${backData.list[i].name}</td>
+                  <td>${backData.list[i].age}</td>
+                  <td>${backData.list[i].sex}</td>
+                  <td>${backData.list[i].phone}</td>
+                  <td>
+                      <a href="#" class="btn btn-success btn-sm">编辑</a> |
+                      <a  href="#" class="btn btn-danger btn-sm">删除</a>
+                  </td>
+                </tr>;
+                  `
+          }
+
+          $('.list-box tbody').html(result);
+        }
+      })
+    }
+    //封装查询到的数据渲染
+    function renderData(backData) {
+      
+      let result = '';
+
+      for(var i = 0; i <backData.list.length; i++) {
+        result +=
+        `
+            <tr data-id='${backData.list[i]._id}'>
+              <td>${backData.list[i].name}</td>
+              <td>${backData.list[i].age}</td>
+              <td>${backData.list[i].sex}</td>
+              <td>${backData.list[i].phone}</td>
+              <td>
+                  <a  href="#" class="btn btn-success btn-sm">编辑</a> |
+                  <a href="#" class="btn btn-danger btn-sm">删除</a>
+              </td>
+            </tr>;
+              `
+      }
+
+      $('.list-box tbody').html(result);
+    }
+  })
+</script>

@@ -1,6 +1,6 @@
 let express = require('express');
 
-let app = express();
+
 
 let path = require('path');
 
@@ -15,15 +15,15 @@ let session = require('express-session');
 // body-parser 中间件 获取post请求方式的参数
 let bodyParser = require('body-parser');
 
+// 导入自己的首页路由
+let indexRoute = require(path.join(__dirname,'/route/indexRoute'));
 
-//引入mongDB 
-const MongoClient = require('mongodb').MongoClient;
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
+//引入自己封装的工具包有查询跟增加 还有返回信息
+let myT = require(path.join(__dirname,'tools/myT.js'));
 
-// Database Name
-const dbName = 'SZHM19';
+//创建app-------------------
+let app = express();
 
 //设置静态支援管理
 app.use(express.static('static'));
@@ -38,7 +38,16 @@ app.use(session({
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
-//路由1
+// 使用 index路由中间件 挂载到 /index这个路径下面
+app.use('/index',indexRoute);
+
+// 导入 art-template
+app.engine('art', require('express-art-template'));
+app.set('views', '/static/views');
+
+
+
+//路由1 -----------------
 //当访问login页面的时候直接读取登录页面并且返回
 
 app.get("/login",(req,res) => {
@@ -63,13 +72,24 @@ app.post('/login',(req,res)=> {
     //验证数据
 
     if(code == req.session.captcha){
-         // 帐号密码存进session
-        req.session.userInfo = {
-            userName,
-            userPass
-        }
+         //去数据库找是否有帐号密码
+         myT.find('user',{userName,userPass},(err,docs) => {
+            if(!err) {
+                //保存帐号密码到session
+                if(docs.length == 1) {
+
+                    req.session.userInfo = {
+                        userName
+                    }
+                    //回首页
+                    myT.mess(res,'欢迎回来','/index');
+                }else {
+                    myT.mess(res,'账号名或者密码错误','/login');
+                }
+
+            }
+         })
         // console.log('验证成功')
-        res.redirect('/index');
     }else {
         // console.log('验证失败')
         res.setHeader('content-type','text/html');
@@ -93,19 +113,19 @@ app.get('/login/captchaImg',function(req,res){
 
 //路由4
 //访问首页
-app.get('/index',(req,res) => {
-    //session 中有userInfo 就表示登录了 留在首页 
-    //反之回到登录页
-    if(req.session.userInfo) {
+// app.get('/index',(req,res) => {
+//     //session 中有userInfo 就表示登录了 留在首页 
+//     //反之回到登录页
+//     if(req.session.userInfo) {
 
-        //读取首页
-        res.sendFile(path.join(__dirname,'static/views/index.html'));
-    }else{
-        //返回登录页
-        res.setHeader('content-type','text/html');
-        res.send("<script>alert('请登录');window.location.href='/login'</script>")
-    }
-})
+//         //读取首页
+//         res.sendFile(path.join(__dirname,'static/views/index.html'));
+//     }else{
+//         //返回登录页
+//         res.setHeader('content-type','text/html');
+//         res.send("<script>alert('请登录');window.location.href='/login'</script>")
+//     }
+// })
 
 //路由5
 //登出
@@ -130,40 +150,18 @@ app.post('/register',(req,res) =>{
     //获取用户数据
     let userName = req.body.username;
     let userPass = req.body.userpass;
-    console.log( userName);
-    console.log(userPass);
 
-    MongoClient.connect(url, (err, client) =>{
-    //连上MongoDB 后 连接库
-    const db = client.db(dbName);
-    //选择需要使用的集合
-    let collection = db.collection('user');
-    
-    //查询数据
-    collection.find({userName}).toArray(function(err, docs) {
+    myT.find('user',{userName},(err,docs) => {
         if(docs.length == 0) {
-            //代表没有人
-            //增加数据
-            collection.insertOne({
-                userName,
-                userPass
-            },(err,result) => {
-                //注册成功了
-                res.setHeader('content-type','text/html');
-                res.send("<script>alert('注册成功');window.location.href='/login'</script>")
-                client.close();
+            myT.insert('user',{userName,userPass},(err,result) => {
+                if(!err){
+                    myT.mess(res,'注册成功','/login');
+                } 
             })
-        }else{
-            res.setHeader('content-type','text/html');
-            res.send('<script>alert("用户名重复");window.location.href="/register"</script>')
+        }else {
+            myT.mess(res,'用户已被注册','/register');
         }
-
-        
-        console.log(docs);
-        // callback(docs);
-      });
-    
-    });
+    })
     
 })
 

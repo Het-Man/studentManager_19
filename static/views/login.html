@@ -38,13 +38,13 @@
                   <div class="form-group">
                     <label for="username " class="col-sm-2 control-label">用户名</label>
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" id="username" placeholder="请输入用户名" name='username'>
+                      <input type="text" class="form-control" id="username" placeholder="请输入用户名" name='username' value="admin">
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="userpass" class="col-sm-2 control-label">密码</label>
                     <div class="col-sm-10">
-                      <input type="password" name='userpass' class="form-control" id="userpass" placeholder="请输入密码">
+                      <input type="password" name='userpass' class="form-control" id="userpass" placeholder="请输入密码" value='123456'>
                     </div>
                   </div>
                   <div class="form-group">
@@ -76,12 +76,26 @@
 <script src="../lib/js/jquery-1.12.4.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="../lib/js/bootstrap.min.js"></script>
+<script src="../lib/js/jquery.md5.js"></script>
 
 <script>
   $(function () {
     $('.code-img').click(function () {
         // console.log('你点;1')
         $(this).attr('src',$(this).attr('src')+`?${Math.random()}`);
+    })
+
+     $('form button[type=submit]').click(function (event) {
+      // // 阻止默认行为
+      // event.preventDefault();
+      // 加密
+      // 获取原始值
+      let oldPass = $("#userPass").val();
+      // 加盐(加多了一些 额外的字符串 增加密码的安全性)
+      var md5 = $.md5(oldPass, 'keyboard cat');
+      console.log(md5);
+
+      $("#userPass").val(md5)
     })
   })
 </script>
